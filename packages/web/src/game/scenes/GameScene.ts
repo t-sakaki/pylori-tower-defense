@@ -4,49 +4,31 @@ import { GAME_WIDTH, GAME_HEIGHT, INITIAL_MUCOSA_HP, INITIAL_ATP, ENEMY_CONFIGS,
 interface Waypoint { x: number; y: number }
 
 /** 敵クラス */
-class Enemy extends Phaser.GameObjects.Container {
+class Enemy extends Phaser.GameObjects.Sprite {
   hp: number;
   maxHp: number;
   speed: number;
   reward: number;
   waypoints: Waypoint[];
   currentWp = 0;
-  private bodyGraphics: Phaser.GameObjects.Graphics;
   private hpBar: Phaser.GameObjects.Graphics;
   private readonly RADIUS = 12;
 
   constructor(scene: Phaser.Scene, waypoints: Waypoint[], config: typeof ENEMY_CONFIGS['scout']) {
-    super(scene, waypoints[0].x, waypoints[0].y);
+    super(scene, waypoints[0].x, waypoints[0].y, 'h-pylori');
+    this.setOrigin(0.5);
+    this.setScale(0.5); // adjust size as needed
     this.waypoints = waypoints;
     this.hp = config.hp;
     this.maxHp = config.hp;
     this.speed = config.speed;
     this.reward = config.reward;
 
-    this.bodyGraphics = scene.add.graphics();
-    this.drawBody();
-    this.add(this.bodyGraphics);
-
     this.hpBar = scene.add.graphics();
     this.add(this.hpBar);
     this.drawHpBar();
 
     scene.add.existing(this);
-  }
-
-  private drawBody() {
-    this.bodyGraphics.clear();
-    // 螺旋っぽい見た目（仮）
-    this.bodyGraphics.fillStyle(0x22c55e, 1);
-    this.bodyGraphics.fillCircle(0, 0, this.RADIUS);
-    this.bodyGraphics.lineStyle(2, 0x14532d, 1);
-    this.bodyGraphics.strokeCircle(0, 0, this.RADIUS);
-    // 鞭毛っぽい線
-    this.bodyGraphics.lineStyle(2, 0x4ade80, 0.8);
-    this.bodyGraphics.beginPath();
-    this.bodyGraphics.moveTo(-8, -8);
-    this.bodyGraphics.lineTo(8, 8);
-    this.bodyGraphics.strokePath();
   }
 
   private drawHpBar() {
@@ -91,9 +73,7 @@ class Enemy extends Phaser.GameObjects.Container {
       this.y += (dy / dist) * moveDist;
     }
   }
-}
-
-/** 弾クラス */
+}/** 弾クラス */
 class Projectile extends Phaser.GameObjects.Container {
   target: Enemy;
   damage: number;
@@ -142,48 +122,42 @@ class Projectile extends Phaser.GameObjects.Container {
 class Tower extends Phaser.GameObjects.Container {
   config: typeof TOWER_CONFIGS['acid'];
   lastFireTime = 0;
-  private bodyGraphics: Phaser.GameObjects.Graphics;
+  private body: Phaser.GameObjects.Image;
   private rangeGraphics: Phaser.GameObjects.Graphics;
 
   constructor(scene: Phaser.Scene, x: number, y: number, config: typeof TOWER_CONFIGS['acid']) {
     super(scene, x, y);
     this.config = config;
 
-    this.bodyGraphics = scene.add.graphics();
-    this.drawBody();
-    this.add(this.bodyGraphics);
+    let key = '';
+    switch (this.config.type) {
+      case 'acid':
+        key = 'tower-acid';
+        break;
+      case 'amoxicillin':
+        key = 'tower-amoxi';
+        break;
+      case 'clarithromycin':
+        // fallback
+        key = 'tower-acid';
+        break;
+      case 'barrier':
+        key = 'tower-acid';
+        break;
+      case 'lacto':
+        key = 'tower-acid';
+        break;
+      default:
+        key = 'tower-acid';
+    }
+
+    this.body = scene.add.image(0, 0, key).setOrigin(0.5).setScale(0.4);
+    this.add(this.body);
 
     this.rangeGraphics = scene.add.graphics();
-    this.drawRange(false);
     this.add(this.rangeGraphics);
 
     scene.add.existing(this);
-  }
-
-  private drawBody() {
-    this.bodyGraphics.clear();
-    const colors: Record<string, number> = {
-      acid: 0xf43f5e,
-      amoxicillin: 0x3b82f6,
-      clarithromycin: 0xa855f7,
-      barrier: 0x6b7280,
-      lacto: 0xfcd34d,
-    };
-    const c = colors[this.config.type] || 0xffffff;
-
-    // タワー本体（四角＋装飾）
-    this.bodyGraphics.fillStyle(c, 1);
-    this.bodyGraphics.fillRect(-16, -16, 32, 32);
-    this.bodyGraphics.lineStyle(2, 0xffffff, 0.8);
-    this.bodyGraphics.strokeRect(-16, -16, 32, 32);
-
-    // 中央のシンボル
-    this.bodyGraphics.fillStyle(0xffffff, 1);
-    if (this.config.type === 'acid') {
-      this.bodyGraphics.fillCircle(0, 0, 6);
-    } else {
-      this.bodyGraphics.fillTriangle(-6, 6, 6, 6, 0, -6);
-    }
   }
 
   private drawRange(active: boolean) {
@@ -220,9 +194,7 @@ class Tower extends Phaser.GameObjects.Container {
       scene.projectiles.push(new Projectile(this.scene, this.x, this.y, target!, this.config.damage, projColor));
     }
   }
-}
-
-export class GameScene extends Phaser.Scene {
+}export class GameScene extends Phaser.Scene {
   day = 1;
   wave = 1;
   atp = INITIAL_ATP;
@@ -254,6 +226,12 @@ export class GameScene extends Phaser.Scene {
     super({ key: 'GameScene' });
   }
 
+  preload() {
+    this.load.image('stomach-bg', '/assets/bg/stomach-lining.png');
+    this.load.image('h-pylori', '/assets/enemies/h-pylori.png');
+    this.load.image('tower-acid', '/assets/towers/antibiotic-pill.png');
+    this.load.image('tower-amoxi', '/assets/towers/antibiotic-pill.png');
+  }
   init(data: { day?: number }) {
     this.day = data.day || 1;
   }
@@ -268,10 +246,9 @@ export class GameScene extends Phaser.Scene {
   }
 
   private drawBackground() {
-    const g = this.add.graphics();
-    // 胃の内壁風の背景
-    g.fillGradientStyle(0x2a0a0a, 0x2a0a0a, 0x1a0505, 0x1a0505, 1);
-    g.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+    this.add.image(0, 0, 'stomach-bg')
+      .setOrigin(0, 0)
+      .setDisplaySize(GAME_WIDTH, GAME_HEIGHT);
   }
 
   private drawPath() {
