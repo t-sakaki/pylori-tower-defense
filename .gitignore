@@ -6,3 +6,8 @@ dist/
 .env.local
 .DS_Store
 .vercel
+# Build outputs
+packages/web/out/
+.turbo/
+# TypeScript build info
+*.tsbuildinfo
