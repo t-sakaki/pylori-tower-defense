@@ -1,8 +1,4 @@
-lines = open('GameScene.ts', 'r').readlines()
-# line numbers are 1-indexed in the editor, we want to replace from line 6 to line 75 (inclusive)
-# In 0-index: start index = 5, end index = 74 (since we want to replace up to line 75, which is index 74)
-# But note: we want to keep line 76 (the end marker) so we replace indices [5:75] (exclusive of 75? Actually we want to replace 5 through 74 inclusive, which is slice [5:75] in Python)
-new_block = '''/** 敵クラス */
+/** 敵クラス */
 class Enemy extends Phaser.GameObjects.Container {
   sprite: Phaser.GameObjects.Sprite;
   hp: number;
@@ -81,13 +77,4 @@ class Enemy extends Phaser.GameObjects.Container {
       this.y += (dy / dist) * moveDist;
     }
   }
-}'''
-# Ensure the new block ends with a newline
-if not new_block.endswith('\n'):
-    new_block += '\n'
-# Split into lines
-new_lines = new_block.splitlines(keepends=True)
-# Replace
-lines[5:75] = new_lines
-open('GameScene.ts', 'w').writelines(lines)
-print('Replaced lines 6-75 with new Enemy class')
+}

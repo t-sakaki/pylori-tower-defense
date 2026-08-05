@@ -1,9 +1,27 @@
-lines = open('GameScene.ts', 'r').readlines()
-# line numbers are 1-indexed in the editor, we want to replace from line 6 to line 75 (inclusive)
-# In 0-index: start index = 5, end index = 74 (since we want to replace up to line 75, which is index 74)
-# But note: we want to keep line 76 (the end marker) so we replace indices [5:75] (exclusive of 75? Actually we want to replace 5 through 74 inclusive, which is slice [5:75] in Python)
-new_block = '''/** 敵クラス */
-class Enemy extends Phaser.GameObjects.Container {
+import sys
+
+# Read the file
+with open('GameScene.ts', 'r') as f:
+    lines = f.readlines()
+
+# Find the start and end markers
+start_marker = "/** 敵クラス */"
+end_marker = "/** 弾クラス */"
+start_index = None
+end_index = None
+for i, line in enumerate(lines):
+    if line.strip() == start_marker:
+        start_index = i
+    if line.strip() == end_marker and start_index is not None:
+        end_index = i
+        break
+
+if start_index is None or end_index is None:
+    print("Could not find markers")
+    sys.exit(1)
+
+# Define the new class (without the markers)
+new_class_str = """class Enemy extends Phaser.GameObjects.Container {
   sprite: Phaser.GameObjects.Sprite;
   hp: number;
   maxHp: number;
@@ -81,13 +99,16 @@ class Enemy extends Phaser.GameObjects.Container {
       this.y += (dy / dist) * moveDist;
     }
   }
-}'''
-# Ensure the new block ends with a newline
-if not new_block.endswith('\n'):
-    new_block += '\n'
-# Split into lines
-new_lines = new_block.splitlines(keepends=True)
-# Replace
-lines[5:75] = new_lines
-open('GameScene.ts', 'w').writelines(lines)
-print('Replaced lines 6-75 with new Enemy class')
+}"""
+
+# Split the new class string into lines and ensure each line ends with newline
+new_class_lines = [line + '\n' for line in new_class_str.split('\n')]
+
+# Build new lines: keep everything up to and including the start marker, then new class, then from the end marker onward
+new_lines = lines[:start_index+1] + new_class_lines + lines[end_index:]
+
+# Write back
+with open('GameScene.ts', 'w') as f:
+    f.writelines(new_lines)
+
+print("Fixed GameScene.ts")
