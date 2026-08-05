@@ -1,0 +1,15 @@
+name = "pylori-api"
+main = "src/index.ts"
+compatibility_date = "2024-05-01"
+
+# KV Namespace for session/drug logs
+[[kv_namespaces]]
+binding = "PYLORI_KV"
+id = "bca67f8bb4204c06a21c4605b9da81c6"
+preview_id = "f014bb05f9dc4de5b0bb62307701d264"
+
+# D1 Database (optional for MVP)
+# [[d1_databases]]
+# binding = "PYLORI_DB"
+# database_name = "pylori-db"
+# database_id = "your_d1_database_id_here"
