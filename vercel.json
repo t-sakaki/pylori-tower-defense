@@ -7,5 +7,6 @@
       "config": { "distDir": "out" }
     }
   ],
-  "outputDirectory": "out"
+  "installCommand": "pnpm install",
+  "buildCommand": "pnpm run build"
 }
