@@ -1,12 +1,7 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "packages/web/package.json",
-      "use": "@vercel/static-build",
-      "config": { "distDir": "out" }
-    }
-  ],
-  "installCommand": "pnpm install",
-  "buildCommand": "pnpm run build"
+  "public": true,
+  "buildCommand": "pnpm run build",
+  "outputDirectory": "packages/web/out",
+  "installCommand": "pnpm install"
 }
