@@ -39,51 +39,36 @@ export class Enemy extends Phaser.GameObjects.Container {
   }
 
   private drawBody() {
-    this.bodyGraphics.clear();
+    // 画像アセットがある場合はSpriteを使用し、ない場合はフォールバックのGraphics描画を行う
+    if (this.scene.textures.exists('h-pylori')) {
+      const sprite = this.scene.add.sprite(0, 0, 'h-pylori');
+      sprite.setDisplaySize(this.RADIUS * 2.5, this.RADIUS * 2.5);
+      this.add(sprite);
+      this.bodyGraphics = this.scene.add.graphics(); // 互換性のために保持
+    } else {
+      this.bodyGraphics = this.scene.add.graphics();
+      const colors: Record<string, number> = {
+        scout: 0x22c55e,
+        urease: 0x3b82f6,
+        cagA: 0xa855f7,
+        vacA: 0xf97316,
+      };
+      const c = colors[this.config.type] || 0x22c55e;
 
-    const colors: Record<string, number> = {
-      scout: 0x22c55e,
-      urease: 0x3b82f6,
-      cagA: 0xa855f7,
-      vacA: 0xf97316,
-    };
-    const c = colors[this.config.type] || 0x22c55e;
-
-    // 本体（螺旋バクテリア風）
-    this.bodyGraphics.fillStyle(c, 1);
-    this.bodyGraphics.fillCircle(0, 0, this.RADIUS);
-
-    // 螺旋線
-    this.bodyGraphics.lineStyle(2, 0xffffff, 0.6);
-    this.bodyGraphics.beginPath();
-    for (let i = 0; i < 3; i++) {
-      const angle = (Math.PI * 2 * i) / 3;
-      const r = this.RADIUS * 0.7;
-      const x = Math.cos(angle) * r;
-      const y = Math.sin(angle) * r;
-      if (i === 0) this.bodyGraphics.moveTo(x, y);
-      else this.bodyGraphics.lineTo(x, y);
-    }
-    this.bodyGraphics.strokePath();
-
-    // 鞭毛（スカウトは2本、他は特徴的な形状）
-    this.bodyGraphics.lineStyle(1.5, c, 0.8);
-    if (this.config.type === 'urease') {
-      // タンク型：背中に泡
-      this.bodyGraphics.fillStyle(0x86efac, 0.8);
-      this.bodyGraphics.fillCircle(0, -10, 6);
-      this.bodyGraphics.fillCircle(-5, -8, 4);
-      this.bodyGraphics.fillCircle(5, -8, 4);
-    } else if (this.config.type === 'cagA') {
-      // スナイパー：針
-      this.bodyGraphics.fillStyle(0xffffff, 1);
-      this.bodyGraphics.fillTriangle(0, -14, -3, -22, 3, -22);
-    } else if (this.config.type === 'vacA') {
-      // ボマー：膨らんだ体
-      this.bodyGraphics.fillStyle(0xf97316, 0.6);
-      this.bodyGraphics.fillCircle(0, 0, this.RADIUS + 4);
-      this.bodyGraphics.lineStyle(2, 0xfca5a5, 0.8);
-      this.bodyGraphics.strokeCircle(0, 0, this.RADIUS + 4);
+      this.bodyGraphics.fillStyle(c, 1);
+      this.bodyGraphics.fillCircle(0, 0, this.RADIUS);
+      this.bodyGraphics.lineStyle(2, 0xffffff, 0.6);
+      this.bodyGraphics.beginPath();
+      for (let i = 0; i < 3; i++) {
+        const angle = (Math.PI * 2 * i) / 3;
+        const r = this.RADIUS * 0.7;
+        const x = Math.cos(angle) * r;
+        const y = Math.sin(angle) * r;
+        if (i === 0) this.bodyGraphics.moveTo(x, y);
+        else this.bodyGraphics.lineTo(x, y);
+      }
+      this.bodyGraphics.strokePath();
+      this.add(this.bodyGraphics);
     }
   }
 
