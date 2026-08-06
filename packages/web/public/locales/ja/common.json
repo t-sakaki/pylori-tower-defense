@@ -1,0 +1,11 @@
+{
+  "menu": {
+    "title": "ピロリ菌タワーディフェンス",
+    "start": "ゲーム開始",
+    "settings": "設定"
+  },
+  "languages": {
+    "ja": "日本語",
+    "en": "English"
+  }
+}

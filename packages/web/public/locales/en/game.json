@@ -1,0 +1,39 @@
+{
+  "ui": {
+    "acidPh": "Gastric pH:",
+    "mucosaHp": "Mucosa HP:",
+    "atp": "ATP:",
+    "score": "SCORE:",
+    "day": "DAY {{day}}",
+    "wave": "WAVE {{wave}}"
+  },
+  "buttons": {
+    "waveStart": "Start WAVE",
+    "takeDrug": "💊 Take Meds",
+    "retry": "Try Again"
+  },
+  "alerts": {
+    "insufficientAtp": "Not enough ATP!",
+    "invalidPlacement": "Cannot place here",
+    "waveCleared": "WAVE {{wave}} Cleared!",
+    "dayStarted": "DAY {{day}} Started!",
+    "mucosaDestroyed": "Mucosa Destroyed...",
+    "sterilizationComplete": "Eradication Complete!"
+  },
+  "towers": {
+    "ppi": {
+      "name": "PPI",
+      "description": "Strongly suppresses gastric acid secretion and raises pH."
+    },
+    "amoxicillin": {
+      "name": "Amoxicillin",
+      "description": "Penicillin antibiotic. Inhibits bacterial cell wall synthesis."
+    }
+  },
+  "enemies": {
+    "pyloriStandard": {
+      "name": "H. pylori (Standard)",
+      "description": "Standard strain that releases urease for protection."
+    }
+  }
+}

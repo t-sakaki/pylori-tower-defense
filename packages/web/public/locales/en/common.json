@@ -1,0 +1,11 @@
+{
+  "menu": {
+    "title": "H. Pylori Tower Defense",
+    "start": "Start Game",
+    "settings": "Settings"
+  },
+  "languages": {
+    "ja": "日本語",
+    "en": "English"
+  }
+}

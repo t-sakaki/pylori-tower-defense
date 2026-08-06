@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import i18n from '@/lib/i18n';
 import {
   GAME_WIDTH,
   GAME_HEIGHT,
@@ -55,6 +56,8 @@ export class GameScene extends Phaser.Scene {
   private waveStartTime = 0;
   private waveBtn!: Phaser.GameObjects.Rectangle;
   private waveBtnText!: Phaser.GameObjects.Text;
+  private drugBtnText!: Phaser.GameObjects.Text;
+  private mucosaLabelText!: Phaser.GameObjects.Text;
   private bgImage?: Phaser.GameObjects.Image;
 
   constructor() {
@@ -75,6 +78,15 @@ export class GameScene extends Phaser.Scene {
 
     this.input.keyboard?.on('keydown-R', () => this.startWave());
     this.input.keyboard?.on('keydown-P', () => this.addAtp(100));
+
+    const handleLanguageChange = () => {
+      this.updateUI();
+    };
+    i18n.on('languageChanged', handleLanguageChange);
+
+    this.events.once(Phaser.Scenes.Events.DESTROY, () => {
+      i18n.off('languageChanged', handleLanguageChange);
+    });
   }
 
   private drawBackground() {
@@ -121,7 +133,7 @@ export class GameScene extends Phaser.Scene {
       const cell = new MucosaCell(this, 940, startY + i * gap, 25);
       this.mucosaCells.push(cell);
     }
-    this.add.text(940, 220, '胃粘膜', {
+    this.mucosaLabelText = this.add.text(940, 220, i18n.t('game:ui.mucosaHp').replace(':', ''), {
       fontSize: '11px',
       color: '#fbcfe8',
     }).setOrigin(0.5).setDepth(50);
@@ -145,12 +157,10 @@ export class GameScene extends Phaser.Scene {
       fontStyle: 'bold',
     }).setDepth(101);
 
-    this.updateUI();
-
     this.waveBtn = this.add.rectangle(GAME_WIDTH - 220, 26, 110, 36, 0x881337)
       .setInteractive({ useHandCursor: true })
       .setDepth(100);
-    this.waveBtnText = this.add.text(GAME_WIDTH - 220, 26, 'WAVE開始', {
+    this.waveBtnText = this.add.text(GAME_WIDTH - 220, 26, i18n.t('game:buttons.waveStart'), {
       fontSize: '13px',
       color: '#fff',
       fontFamily: 'sans-serif',
@@ -163,11 +173,13 @@ export class GameScene extends Phaser.Scene {
     const drugBtn = this.add.rectangle(100, GAME_HEIGHT - 28, 90, 32, 0x059669)
       .setInteractive({ useHandCursor: true })
       .setDepth(100);
-    this.add.text(100, GAME_HEIGHT - 28, '💊 服薬', {
+    this.drugBtnText = this.add.text(100, GAME_HEIGHT - 28, i18n.t('game:buttons.takeDrug'), {
       fontSize: '12px',
       color: '#fff',
     }).setOrigin(0.5).setDepth(101);
     drugBtn.on('pointerdown', () => this.onDrugTaken());
+
+    this.updateUI();
   }
 
   private setupTowerPalette() {
@@ -221,11 +233,11 @@ export class GameScene extends Phaser.Scene {
 
       const config = TOWER_CONFIGS[this.selectedTower];
       if (!config || this.atp < config.cost) {
-        this.showFloatingText(pointer.x, pointer.y - 20, 'ATP不足！', '#ef4444');
+        this.showFloatingText(pointer.x, pointer.y - 20, i18n.t('game:alerts.insufficientAtp'), '#ef4444');
         return;
       }
       if (!this.canPlaceTower(pointer.x, pointer.y)) {
-        this.showFloatingText(pointer.x, pointer.y - 20, 'ここには置けません', '#f59e0b');
+        this.showFloatingText(pointer.x, pointer.y - 20, i18n.t('game:alerts.invalidPlacement'), '#f59e0b');
         return;
       }
 
@@ -290,7 +302,7 @@ export class GameScene extends Phaser.Scene {
       });
     }
 
-    this.waveBtnText.setText('WAVE進行中');
+    this.waveBtnText.setText(i18n.t('game:buttons.waveStart'));
     this.waveBtn.setFillStyle(0x4b5563);
     this.waveBtn.disableInteractive();
   }
@@ -373,7 +385,7 @@ export class GameScene extends Phaser.Scene {
     for (const cell of this.mucosaCells) {
       if (cell.active) cell.heal(10);
     }
-    this.showFloatingText(GAME_WIDTH / 2, GAME_HEIGHT / 2, '💊 服薬ボーナス発動！', '#22c55e');
+    this.showFloatingText(GAME_WIDTH / 2, GAME_HEIGHT / 2, `💊 ${i18n.t('game:buttons.takeDrug')}`, '#22c55e');
     this.updateUI();
   }
 
@@ -399,15 +411,33 @@ export class GameScene extends Phaser.Scene {
   private updateUI() {
     const dayInfo = WAVES.find((w) => w.day === this.day);
     const maxWave = dayInfo?.waves || 3;
+
+    const acidLabel = i18n.t('game:ui.acidPh');
+    const mucosaLabel = i18n.t('game:ui.mucosaHp');
+    const atpLabel = i18n.t('game:ui.atp');
+    const scoreLabel = i18n.t('game:ui.score');
+    const dayLabel = i18n.t('game:ui.day', { day: this.day });
+    const waveLabel = i18n.t('game:ui.wave', { wave: this.wave });
+
     this.uiText.setText(
-      `胃酸pH:${this.acidPh.toFixed(1)}  粘膜HP:${Math.max(0, this.mucosaHp)}  ATP:${this.atp}  SCORE:${this.score}`
+      `${acidLabel}${this.acidPh.toFixed(1)}  ${mucosaLabel}${Math.max(0, this.mucosaHp)}  ${atpLabel}${this.atp}  ${scoreLabel}${this.score}`
     );
-    this.dayText.setText(`DAY ${this.day} / 7  WAVE ${this.wave}/${maxWave}`);
+    this.dayText.setText(`${dayLabel} / 7  ${waveLabel}/${maxWave}`);
+
+    if (this.waveBtnText) {
+      this.waveBtnText.setText(i18n.t('game:buttons.waveStart'));
+    }
+    if (this.drugBtnText) {
+      this.drugBtnText.setText(i18n.t('game:buttons.takeDrug'));
+    }
+    if (this.mucosaLabelText) {
+      this.mucosaLabelText.setText(mucosaLabel.replace(':', ''));
+    }
   }
 
   private gameOver() {
     this.add.rectangle(GAME_WIDTH / 2, GAME_HEIGHT / 2, GAME_WIDTH, GAME_HEIGHT, 0x000000, 0.85).setDepth(200);
-    this.add.text(GAME_WIDTH / 2, GAME_HEIGHT / 2 - 60, '胃壁崩壊...', {
+    this.add.text(GAME_WIDTH / 2, GAME_HEIGHT / 2 - 60, i18n.t('game:alerts.mucosaDestroyed'), {
       fontSize: '52px',
       color: '#ef4444',
       fontStyle: 'bold',
@@ -427,7 +457,7 @@ export class GameScene extends Phaser.Scene {
     const retry = this.add.rectangle(GAME_WIDTH / 2, GAME_HEIGHT / 2 + 100, 180, 44, 0x881337)
       .setInteractive({ useHandCursor: true })
       .setDepth(201);
-    this.add.text(GAME_WIDTH / 2, GAME_HEIGHT / 2 + 100, '再挑戦する', {
+    this.add.text(GAME_WIDTH / 2, GAME_HEIGHT / 2 + 100, i18n.t('game:buttons.retry'), {
       fontSize: '18px',
       color: '#fff',
       fontFamily: 'sans-serif',
@@ -457,7 +487,7 @@ export class GameScene extends Phaser.Scene {
       this.wave++;
       this.acidPh = Math.max(1.0, this.acidPh - 0.15);
       this.atp += 30;
-      this.showFloatingText(GAME_WIDTH / 2, 80, `WAVE ${this.wave - 1} クリア！`, '#22c55e');
+      this.showFloatingText(GAME_WIDTH / 2, 80, i18n.t('game:alerts.waveCleared', { wave: this.wave - 1 }), '#22c55e');
 
       const dayInfo = WAVES.find((w) => w.day === this.day);
       if (dayInfo && this.wave > dayInfo.waves) {
@@ -466,11 +496,11 @@ export class GameScene extends Phaser.Scene {
         } else {
           this.day++;
           this.wave = 1;
-          this.showFloatingText(GAME_WIDTH / 2, GAME_HEIGHT / 2, `DAY ${this.day} 開始！`, '#3b82f6');
+          this.showFloatingText(GAME_WIDTH / 2, GAME_HEIGHT / 2, i18n.t('game:alerts.dayStarted', { day: this.day }), '#3b82f6');
         }
       }
 
-      this.waveBtnText.setText('WAVE開始');
+      this.waveBtnText.setText(i18n.t('game:buttons.waveStart'));
       this.waveBtn.setFillStyle(0x881337);
       this.waveBtn.setInteractive({ useHandCursor: true });
       this.updateUI();
@@ -479,7 +509,7 @@ export class GameScene extends Phaser.Scene {
 
   private gameClear() {
     this.add.rectangle(GAME_WIDTH / 2, GAME_HEIGHT / 2, GAME_WIDTH, GAME_HEIGHT, 0x000000, 0.85).setDepth(200);
-    this.add.text(GAME_WIDTH / 2, GAME_HEIGHT / 2 - 60, '除菌完了！', {
+    this.add.text(GAME_WIDTH / 2, GAME_HEIGHT / 2 - 60, i18n.t('game:alerts.sterilizationComplete'), {
       fontSize: '52px',
       color: '#22c55e',
       fontStyle: 'bold',

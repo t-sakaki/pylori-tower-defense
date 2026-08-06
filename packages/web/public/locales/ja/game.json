@@ -1,0 +1,39 @@
+{
+  "ui": {
+    "acidPh": "胃酸pH:",
+    "mucosaHp": "粘膜HP:",
+    "atp": "ATP:",
+    "score": "SCORE:",
+    "day": "DAY {{day}}",
+    "wave": "WAVE {{wave}}"
+  },
+  "buttons": {
+    "waveStart": "WAVE開始",
+    "takeDrug": "💊 服薬",
+    "retry": "再挑戦する"
+  },
+  "alerts": {
+    "insufficientAtp": "ATP不足！",
+    "invalidPlacement": "ここには置けません",
+    "waveCleared": "WAVE {{wave}} クリア！",
+    "dayStarted": "DAY {{day}} 開始！",
+    "mucosaDestroyed": "胃壁崩壊…",
+    "sterilizationComplete": "除菌完了！"
+  },
+  "towers": {
+    "ppi": {
+      "name": "PPI（プロトンポンプ阻害薬）",
+      "description": "胃酸分泌を強力に抑え、胃内pHを上昇させる。"
+    },
+    "amoxicillin": {
+      "name": "アモキシシリン",
+      "description": "ペニシリン系抗生物質。ピロリ菌の細胞壁合成を阻害。"
+    }
+  },
+  "enemies": {
+    "pyloriStandard": {
+      "name": "ピロリ菌（標準株）",
+      "description": "ウレアーゼを放出して身を守る標準的なピロリ菌。"
+    }
+  }
+}
