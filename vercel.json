@@ -1,7 +1,0 @@
-{
-  "version": 2,
-  "public": true,
-  "buildCommand": "pnpm run build",
-  "outputDirectory": "packages/web/out",
-  "installCommand": "pnpm install"
-}
