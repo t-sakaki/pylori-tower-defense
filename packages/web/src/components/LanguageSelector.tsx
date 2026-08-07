@@ -2,9 +2,10 @@
 
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import i18n from '@/lib/i18n';
 
 export const LanguageSelector: React.FC = () => {
-  const { t, i18n } = useTranslation('common');
+  const { t } = useTranslation('common');
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
