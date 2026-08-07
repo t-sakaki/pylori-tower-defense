@@ -33,16 +33,24 @@ export class MucosaCell extends Phaser.GameObjects.Container {
   }
 
   private drawBody() {
-    this.bodyGraphics.clear();
-    // ピンク色の上皮細胞
-    this.bodyGraphics.fillStyle(0xfbcfe8, 0.9);
-    this.bodyGraphics.fillRoundedRect(-16, -16, 32, 32, 8);
-    this.bodyGraphics.lineStyle(2, 0xf9a8d4, 1);
-    this.bodyGraphics.strokeRoundedRect(-16, -16, 32, 32, 8);
+    // 画像アセット（上皮細胞テクスチャ）がある場合は表示、ない場合はフォールバックのGraphics描画
+    if (this.scene.textures.exists('bg-lining')) {
+      const lining = this.scene.add.image(0, 0, 'bg-lining');
+      lining.setDisplaySize(40, 40);
+      lining.setAlpha(0.6);
+      this.add(lining);
+    } else {
+      this.bodyGraphics.clear();
+      // ピンク色の上皮細胞
+      this.bodyGraphics.fillStyle(0xfbcfe8, 0.9);
+      this.bodyGraphics.fillRoundedRect(-16, -16, 32, 32, 8);
+      this.bodyGraphics.lineStyle(2, 0xf9a8d4, 1);
+      this.bodyGraphics.strokeRoundedRect(-16, -16, 32, 32, 8);
 
-    // 核っぽい丸
-    this.bodyGraphics.fillStyle(0xf472b6, 0.6);
-    this.bodyGraphics.fillCircle(0, 0, 6);
+      // 核っぽい丸
+      this.bodyGraphics.fillStyle(0xf472b6, 0.6);
+      this.bodyGraphics.fillCircle(0, 0, 6);
+    }
   }
 
   private drawHpBar() {

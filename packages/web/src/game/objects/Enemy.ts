@@ -39,12 +39,19 @@ export class Enemy extends Phaser.GameObjects.Container {
   }
 
   private drawBody() {
-    // 画像アセットがある場合はSpriteを使用し、ない場合はフォールバックのGraphics描画を行う
-    if (this.scene.textures.exists('h-pylori')) {
-      const sprite = this.scene.add.sprite(0, 0, 'h-pylori');
-      sprite.setDisplaySize(this.RADIUS * 2.5, this.RADIUS * 2.5);
+    // 画像アセットがある場合はSpriteを使用（tintで敵種別を色分け）、ない場合はフォールバックのGraphics描画
+    if (this.scene.textures.exists('enemy-real')) {
+      const sprite = this.scene.add.image(0, 0, 'enemy-real');
+      sprite.setDisplaySize(28, 28);
+      const tints: Record<string, number> = {
+        scout: 0xffffff,
+        urease: 0x88ccff,
+        cagA: 0xff88ff,
+        vacA: 0xffaa44,
+      };
+      sprite.setTint(tints[this.config.type] || 0xffffff);
+      sprite.setBlendMode(Phaser.BlendModes.ADD);
       this.add(sprite);
-      this.bodyGraphics = this.scene.add.graphics(); // 互換性のために保持
     } else {
       this.bodyGraphics = this.scene.add.graphics();
       const colors: Record<string, number> = {

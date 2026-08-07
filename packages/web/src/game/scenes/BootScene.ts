@@ -32,16 +32,10 @@ export class BootScene extends Phaser.Scene {
     });
 
     // === アセット読み込み ===
-    // 画像があれば使い、なければGraphicsで描画（GameScene側で対応）
-
-    // 敵画像
-    this.load.image('enemy-scout', '/assets/enemies/h-pylori.png');
-
-    // 背景
-    this.load.image('bg-stomach', '/assets/bg/stomach-lining.png');
-
-    // タワー画像
-    this.load.image('tower-antibiotic', '/assets/towers/antibiotic-pill.png');
+    // 画像アセット（Gemini生成画像を採用）
+    this.load.image('bg-battlefield', '/assets/bg/stomach-battlefield.jpg');
+    this.load.image('bg-lining', '/assets/bg/stomach-lining.jpg');
+    this.load.image('enemy-real', '/assets/enemies/h-pylori-real.png');
 
     // 読み込みエラーを無視（ファイルがなくても続行）
     this.load.on('loaderror', () => {

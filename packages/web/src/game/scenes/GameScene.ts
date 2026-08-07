@@ -101,11 +101,20 @@ export class GameScene extends Phaser.Scene {
   }
 
   private drawBackground() {
-    if (this.textures.exists('bg-stomach')) {
-      this.bgImage = this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'bg-stomach');
+    if (this.textures.exists('bg-battlefield')) {
+      // メイン背景（胃内戦場）
+      this.bgImage = this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'bg-battlefield');
       this.bgImage.setDisplaySize(GAME_WIDTH, GAME_HEIGHT);
-      this.bgImage.setAlpha(0.7);
+      this.bgImage.setAlpha(0.9); // 少し透過してゲーム要素を浮かせる
       this.bgImage.setDepth(-1);
+
+      // 暗いオーバーレイ（コントラスト確保）
+      const overlay = this.add.rectangle(
+        GAME_WIDTH / 2, GAME_HEIGHT / 2,
+        GAME_WIDTH, GAME_HEIGHT,
+        0x000000, 0.15
+      );
+      overlay.setDepth(-1);
     } else {
       const g = this.add.graphics();
       g.fillGradientStyle(0x2a0a0a, 0x2a0a0a, 0x1a0505, 0x1a0505, 1);
