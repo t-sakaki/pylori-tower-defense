@@ -52,7 +52,7 @@ export default function GameCanvas() {
     <div
       ref={containerRef}
       className="border-4 border-gastric-900 rounded-lg shadow-2xl overflow-hidden"
-      style={{ width: '100%', maxWidth: 960, aspectRatio: '960/640' }}
+      style={{ width: '100%', height: '100%', maxWidth: '960px', maxHeight: '640px', aspectRatio: '960/640' }}
     />
   );
 }
