@@ -1,4 +1,5 @@
 import * as Phaser from 'phaser';
+import i18n from '@/lib/i18n';
 
 export class MenuScene extends Phaser.Scene {
   constructor() {
@@ -14,14 +15,14 @@ export class MenuScene extends Phaser.Scene {
     graphics.fillRect(0, 0, width, height);
 
     // タイトル
-    this.add.text(width / 2, height * 0.25, 'ピロリ菌除菌', {
+    this.add.text(width / 2, height * 0.25, i18n.t('common:menu.title'), {
       fontSize: '48px',
       color: '#fb7185',
       fontStyle: 'bold',
       fontFamily: 'sans-serif',
     }).setOrigin(0.5);
 
-    this.add.text(width / 2, height * 0.35, 'タワーディフェンス', {
+    this.add.text(width / 2, height * 0.35, i18n.t('common:menu.subtitle'), {
       fontSize: '32px',
       color: '#ffffff',
       fontFamily: 'sans-serif',
@@ -36,7 +37,7 @@ export class MenuScene extends Phaser.Scene {
     const btnBg = this.add.rectangle(width / 2, btnY + btnH / 2, btnW, btnH, 0x881337)
       .setInteractive({ useHandCursor: true });
 
-    const btnText = this.add.text(width / 2, btnY + btnH / 2, 'DAY 1 作戦開始', {
+    const btnText = this.add.text(width / 2, btnY + btnH / 2, i18n.t('common:menu.startButton'), {
       fontSize: '24px',
       color: '#ffffff',
       fontFamily: 'sans-serif',
@@ -49,13 +50,13 @@ export class MenuScene extends Phaser.Scene {
     });
 
     // 説明文
-    this.add.text(width / 2, height * 0.75, '胃粘膜を防衛線に、ピロリ菌から胃を守れ！', {
+    this.add.text(width / 2, height * 0.75, i18n.t('common:menu.tagline1'), {
       fontSize: '16px',
       color: '#aaaaaa',
       fontFamily: 'sans-serif',
     }).setOrigin(0.5);
 
-    this.add.text(width / 2, height * 0.82, '7日間の服薬を完遂し、除菌を目指せ', {
+    this.add.text(width / 2, height * 0.82, i18n.t('common:menu.tagline2'), {
       fontSize: '14px',
       color: '#888888',
       fontFamily: 'sans-serif',

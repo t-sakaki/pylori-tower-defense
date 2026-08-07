@@ -1,8 +1,16 @@
 {
   "menu": {
+    "icon": "\uD83E\uDDA0",
     "title": "ピロリ菌タワーディフェンス",
+    "subtitle": "タワーディフェンス",
     "start": "ゲーム開始",
+    "startButton": "DAY 1 作戦開始",
+    "tagline1": "胃粘膜を防衛線に、ピロリ菌から胃を守れ！",
+    "tagline2": "7日間の服薬を完遂し、除菌を目指せ",
     "settings": "設定"
+  },
+  "boot": {
+    "connecting": "胃袋要塞へ接続中..."
   },
   "languages": {
     "ja": "日本語",

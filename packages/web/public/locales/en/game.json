@@ -9,8 +9,8 @@
   },
   "buttons": {
     "waveStart": "Start WAVE",
-    "takeDrug": "💊 Take Meds",
-    "retry": "Try Again"
+    "takeDrug": "\uD83D\uDC8A Take Meds",
+    "retry": "Retry"
   },
   "alerts": {
     "insufficientAtp": "Not enough ATP!",
@@ -18,22 +18,56 @@
     "waveCleared": "WAVE {{wave}} Cleared!",
     "dayStarted": "DAY {{day}} Started!",
     "mucosaDestroyed": "Mucosa Destroyed...",
-    "sterilizationComplete": "Eradication Complete!"
+    "sterilizationComplete": "Eradication Complete!",
+    "selectTower": "Select a tower first"
   },
   "towers": {
-    "ppi": {
-      "name": "PPI",
-      "description": "Strongly suppresses gastric acid secretion and raises pH."
+    "acid": {
+      "name": "Proton Pump Inhibitor (PPI)",
+      "label": "Acid",
+      "description": "Proton pump inhibitor. Strongly suppresses gastric acid secretion, raising intragastric pH."
     },
     "amoxicillin": {
-      "name": "Amoxicillin",
-      "description": "Penicillin antibiotic. Inhibits bacterial cell wall synthesis."
+      "name": "Amoxicillin – Penicillin Antibiotic",
+      "label": "Amoxicillin",
+      "description": "Penicillin-class antibiotic. Inhibits bacterial cell wall synthesis to eradicate H. pylori."
+    },
+    "clarithromycin": {
+      "name": "Clarithromycin – Macrolide Antibiotic",
+      "label": "Clarithromycin",
+      "description": "Macrolide antibiotic. Inhibits bacterial protein synthesis to suppress infection."
+    },
+    "barrier": {
+      "name": "Mucosal Protective Agent",
+      "label": "Barrier",
+      "description": "Protects gastric mucosa from gastric acid and peptic damage."
+    },
+    "lacto": {
+      "name": "Lactobacillus (Probiotic)",
+      "label": "Lactobacillus",
+      "description": "Promotes beneficial gut flora and aids gastric mucosal healing."
     }
   },
   "enemies": {
     "pyloriStandard": {
-      "name": "H. pylori (Standard)",
-      "description": "Standard strain that releases urease for protection."
+      "name": "Helicobacter pylori (Standard Strain)",
+      "description": "Wild-type strain that produces urease to neutralize gastric acid and colonize the stomach."
+    },
+    "scout": {
+      "name": "H. pylori Scout",
+      "description": "Fast-moving reconnaissance strain. Low HP and small reward."
+    },
+    "urease": {
+      "name": "Urease Tank",
+      "description": "Heavy strain that releases urease to neutralize surrounding gastric acid."
+    },
+    "cagA": {
+      "name": "CagA Sniper",
+      "description": "Ranged strain that delivers CagA toxin to epithelial cells."
+    },
+    "vacA": {
+      "name": "VacA Bomber",
+      "description": "On death releases VacA toxin causing localized collapse (ulceration)."
     }
   }
 }

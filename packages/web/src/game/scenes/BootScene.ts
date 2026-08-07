@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import i18n from '@/lib/i18n';
 
 export class BootScene extends Phaser.Scene {
   constructor() {
@@ -9,7 +10,7 @@ export class BootScene extends Phaser.Scene {
     const { width, height } = this.scale;
 
     // ローディング表示
-    const loadingText = this.add.text(width / 2, height / 2, '胃袋要塞へ接続中...', {
+    const loadingText = this.add.text(width / 2, height / 2, i18n.t('common:boot.connecting'), {
       fontSize: '24px',
       color: '#fb7185',
       fontFamily: 'sans-serif',

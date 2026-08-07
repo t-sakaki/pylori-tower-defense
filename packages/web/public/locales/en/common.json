@@ -1,8 +1,16 @@
 {
   "menu": {
+    "icon": "\uD83E\uDDA0",
     "title": "H. Pylori Tower Defense",
+    "subtitle": "Tower Defense",
     "start": "Start Game",
+    "startButton": "DAY 1 Start Operation",
+    "tagline1": "Defend the gastric mucosa and protect the stomach from H. pylori!",
+    "tagline2": "Complete 7 days of medication to eradicate the infection",
     "settings": "Settings"
+  },
+  "boot": {
+    "connecting": "Connecting to Stomach Fortress..."
   },
   "languages": {
     "ja": "日本語",

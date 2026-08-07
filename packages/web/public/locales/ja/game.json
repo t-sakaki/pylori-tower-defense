@@ -9,31 +9,65 @@
   },
   "buttons": {
     "waveStart": "WAVE開始",
-    "takeDrug": "💊 服薬",
-    "retry": "再挑戦する"
+    "takeDrug": "\uD83D\uDC8A 服薬",
+    "retry": "再挑戦"
   },
   "alerts": {
     "insufficientAtp": "ATP不足！",
-    "invalidPlacement": "ここには置けません",
+    "invalidPlacement": "ここに配置できません",
     "waveCleared": "WAVE {{wave}} クリア！",
     "dayStarted": "DAY {{day}} 開始！",
-    "mucosaDestroyed": "胃壁崩壊…",
-    "sterilizationComplete": "除菌完了！"
+    "mucosaDestroyed": "粘膜破壊...",
+    "sterilizationComplete": "除菌完了！",
+    "selectTower": "タワーを選択してください"
   },
   "towers": {
-    "ppi": {
-      "name": "PPI（プロトンポンプ阻害薬）",
-      "description": "胃酸分泌を強力に抑え、胃内pHを上昇させる。"
+    "acid": {
+      "name": "プロトンポンプ阻害薬 (PPI)",
+      "label": "胃酸",
+      "description": "プロトンポンプ阻害薬。胃酸分泌を強力に抑制し、胃内pHを上昇させる。"
     },
     "amoxicillin": {
-      "name": "アモキシシリン",
-      "description": "ペニシリン系抗生物質。ピロリ菌の細胞壁合成を阻害。"
+      "name": "アモキシシリン（ペニシリン系抗生物質）",
+      "label": "アモキシシリン",
+      "description": "ペニシリン系抗生物質。細菌の細胞壁合成を阻害する。"
+    },
+    "clarithromycin": {
+      "name": "クラリスロマイシン（マクロライド系抗生物質）",
+      "label": "クラリスロマイシン",
+      "description": "マクロライド系抗生物質。細菌のタンパク質合成を阻害する。"
+    },
+    "barrier": {
+      "name": "粘膜保護薬",
+      "label": "バリア",
+      "description": "胃粘膜を胃酸やペプシンによる傷害から保護する。"
+    },
+    "lacto": {
+      "name": "乳酸菌（プロバイオティクス）",
+      "label": "乳酸菌",
+      "description": "善玉菌を増やし、粘膜の修復を促進する。"
     }
   },
   "enemies": {
     "pyloriStandard": {
       "name": "ピロリ菌（標準株）",
-      "description": "ウレアーゼを放出して身を守る標準的なピロリ菌。"
+      "description": "ウレアーゼを産生し胃酸を中和する野生型株。"
+    },
+    "scout": {
+      "name": "ピロリ・スカウト",
+      "description": "高速で移動する偵察型ピロリ菌。hpが低く報酬も小さい。"
+    },
+    "urease": {
+      "name": "ウレアーゼ・タンク",
+      "description": "ウレアーゼを放出し周囲の胃酸を中和する重厚な株。"
+    },
+    "cagA": {
+      "name": "CagA・スナイパー",
+      "description": "CagA毒素を遠隔投与する狙撃型ピロリ菌。"
+    },
+    "vacA": {
+      "name": "VacA・ボマー",
+      "description": "死滅時にVacA毒素で範囲崩壊（潰瘍化）を引き起こす。"
     }
   }
 }

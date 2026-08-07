@@ -11,3 +11,7 @@ packages/web/out/
 .turbo/
 # TypeScript build info
 *.tsbuildinfo
+
+# Local temp / stray files
+packages/api/.wrangler/
+gemini_support_prompt.txt
