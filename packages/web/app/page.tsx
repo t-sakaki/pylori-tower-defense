@@ -12,7 +12,7 @@ export default function Home() {
     <main className="flex flex-col items-center gap-4 py-6">
       <div className="w-full max-w-4xl flex justify-between items-center px-4">
         <h1 className="text-2xl font-bold text-gastric-500 tracking-wider">
-          {t('menu.icon')} {t('menu.title')}
+          {t('common:menu.icon')} {t('common:menu.title')}
         </h1>
         <LanguageSelector />
       </div>
