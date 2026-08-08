@@ -50,13 +50,23 @@ export default function GameCanvas() {
 
   return (
     <div
-      ref={containerRef}
-      className="border-4 border-gastric-900 rounded-lg shadow-2xl"
       style={{
-        width: 'min(960px, 100%)',
-        aspectRatio: '960 / 640',
+        width: '100vw',
+        maxWidth: '960px',
         margin: '0 auto',
+        overflow: 'hidden',
+        position: 'relative',
       }}
-    />
+    >
+      <div
+        ref={containerRef}
+        className="border-4 border-gastric-900 rounded-lg shadow-2xl"
+        style={{
+          width: '100%',
+          aspectRatio: '960 / 640',
+          display: 'block',
+        }}
+      />
+    </div>
   );
 }

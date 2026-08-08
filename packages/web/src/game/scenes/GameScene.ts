@@ -232,11 +232,11 @@ export class GameScene extends Phaser.Scene {
       fontStyle: 'bold',
     }).setDepth(101);
 
-    this.waveBtn = this.add.rectangle(GAME_WIDTH - 220, 26, 110, 36, 0x881337)
+    this.waveBtn = this.add.rectangle(GAME_WIDTH - 220, 26, 120, 44, 0x881337)
       .setInteractive({ useHandCursor: true })
       .setDepth(100);
     this.waveBtnText = this.add.text(GAME_WIDTH - 220, 26, i18n.t('game:buttons.waveStart'), {
-      fontSize: '13px',
+      fontSize: '14px',
       color: '#fff',
       fontFamily: 'sans-serif',
     }).setOrigin(0.5).setDepth(101);
@@ -245,11 +245,11 @@ export class GameScene extends Phaser.Scene {
     this.waveBtn.on('pointerout', () => this.waveBtn.setFillStyle(0x881337));
     this.waveBtn.on('pointerdown', () => this.startWave());
 
-    const drugBtn = this.add.rectangle(100, GAME_HEIGHT - 28, 90, 32, 0x059669)
+    const drugBtn = this.add.rectangle(100, GAME_HEIGHT - 28, 100, 44, 0x059669)
       .setInteractive({ useHandCursor: true })
       .setDepth(100);
     this.drugBtnText = this.add.text(100, GAME_HEIGHT - 28, i18n.t('game:buttons.takeDrug'), {
-      fontSize: '12px',
+      fontSize: '13px',
       color: '#fff',
     }).setOrigin(0.5).setDepth(101);
     drugBtn.on('pointerdown', () => this.onDrugTaken());
@@ -268,12 +268,12 @@ export class GameScene extends Phaser.Scene {
     ];
 
     towerDefs.forEach((t, i) => {
-      const x = 220 + i * 110;
-      const bg = this.add.rectangle(x, paletteY, 100, 36, t.color, 0.85)
+      const x = 220 + i * 120;
+      const bg = this.add.rectangle(x, paletteY, 110, 44, t.color, 0.85)
         .setInteractive({ useHandCursor: true })
         .setDepth(100);
       this.add.text(x, paletteY, `${t.label} ${t.cost}ATP`, {
-        fontSize: '11px',
+        fontSize: '12px',
         color: '#fff',
       }).setOrigin(0.5).setDepth(101);
       bg.on('pointerover', () => bg.setAlpha(1));
