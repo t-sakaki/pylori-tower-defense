@@ -460,17 +460,48 @@ export class GameScene extends Phaser.Scene {
   }
 
   private showFloatingText(x: number, y: number, text: string, color: string) {
+    const padding = 12;
     const label = this.add.text(x, y, text, {
-      fontSize: '16px',
+      fontSize: '20px',
       color: color,
+      fontStyle: 'bold',
+      align: 'center',
+      wordWrap: { width: 480 },
     }).setOrigin(0.5).setDepth(200);
+
+    // 背景矩形を追加して可読性を確保
+    const bg = this.add.rectangle(
+      x,
+      y,
+      label.width + padding * 2,
+      label.height + padding,
+      0x000000,
+      0.7
+    ).setDepth(199);
+    bg.setStrokeStyle(2, 0xffffff, 0.3);
+
+    // 初期は透明 → フェードイン → 維持 → フェードアウト
+    label.setAlpha(0);
+    bg.setAlpha(0);
     this.tweens.add({
-      targets: label,
-      y: y - 30,
-      alpha: 0,
-      duration: 1000,
+      targets: [label, bg],
+      alpha: { from: 0, to: 1 },
+      duration: 200,
       ease: 'Power2',
-      onComplete: () => label.destroy(),
+      onComplete: () => {
+        this.tweens.add({
+          targets: [label, bg],
+          alpha: 0,
+          y: '-=20',
+          delay: 1400,
+          duration: 400,
+          ease: 'Power2',
+          onComplete: () => {
+            label.destroy();
+            bg.destroy();
+          },
+        });
+      },
     });
   }
 
