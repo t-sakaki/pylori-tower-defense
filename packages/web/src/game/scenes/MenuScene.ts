@@ -2,6 +2,12 @@ import * as Phaser from 'phaser';
 import i18n from '@/lib/i18n';
 
 export class MenuScene extends Phaser.Scene {
+  private titleText?: Phaser.GameObjects.Text;
+  private subtitleText?: Phaser.GameObjects.Text;
+  private btnText?: Phaser.GameObjects.Text;
+  private tagline1Text?: Phaser.GameObjects.Text;
+  private tagline2Text?: Phaser.GameObjects.Text;
+
   constructor() {
     super({ key: 'MenuScene' });
   }
@@ -15,14 +21,14 @@ export class MenuScene extends Phaser.Scene {
     graphics.fillRect(0, 0, width, height);
 
     // タイトル
-    this.add.text(width / 2, height * 0.25, i18n.t('common:menu.title'), {
+    this.titleText = this.add.text(width / 2, height * 0.25, '', {
       fontSize: '48px',
       color: '#fb7185',
       fontStyle: 'bold',
       fontFamily: 'sans-serif',
     }).setOrigin(0.5);
 
-    this.add.text(width / 2, height * 0.35, i18n.t('common:menu.subtitle'), {
+    this.subtitleText = this.add.text(width / 2, height * 0.35, '', {
       fontSize: '32px',
       color: '#ffffff',
       fontFamily: 'sans-serif',
@@ -37,7 +43,7 @@ export class MenuScene extends Phaser.Scene {
     const btnBg = this.add.rectangle(width / 2, btnY + btnH / 2, btnW, btnH, 0x881337)
       .setInteractive({ useHandCursor: true });
 
-    const btnText = this.add.text(width / 2, btnY + btnH / 2, i18n.t('common:menu.startButton'), {
+    this.btnText = this.add.text(width / 2, btnY + btnH / 2, '', {
       fontSize: '24px',
       color: '#ffffff',
       fontFamily: 'sans-serif',
@@ -50,16 +56,44 @@ export class MenuScene extends Phaser.Scene {
     });
 
     // 説明文
-    this.add.text(width / 2, height * 0.75, i18n.t('common:menu.tagline1'), {
+    this.tagline1Text = this.add.text(width / 2, height * 0.75, '', {
       fontSize: '16px',
       color: '#aaaaaa',
       fontFamily: 'sans-serif',
     }).setOrigin(0.5);
 
-    this.add.text(width / 2, height * 0.82, i18n.t('common:menu.tagline2'), {
+    this.tagline2Text = this.add.text(width / 2, height * 0.82, '', {
       fontSize: '14px',
       color: '#888888',
       fontFamily: 'sans-serif',
     }).setOrigin(0.5);
+
+    // 初期テキスト反映
+    this.refreshTexts();
+
+    // 言語切替イベントを購読
+    this.refreshHandler = () => this.refreshTexts();
+    i18n.on('languageChanged', this.refreshHandler);
+
+    // シーン終了時にリスナーを解除（メモリリーク防止）
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      if (this.refreshHandler) {
+        i18n.off('languageChanged', this.refreshHandler);
+        this.refreshHandler = undefined;
+      }
+    });
+  }
+
+  private refreshHandler?: () => void;
+
+  private refreshTexts() {
+    if (!this.titleText || !this.subtitleText || !this.btnText || !this.tagline1Text || !this.tagline2Text) {
+      return;
+    }
+    this.titleText.setText(i18n.t('common:menu.title'));
+    this.subtitleText.setText(i18n.t('common:menu.subtitle'));
+    this.btnText.setText(i18n.t('common:menu.startButton'));
+    this.tagline1Text.setText(i18n.t('common:menu.tagline1'));
+    this.tagline2Text.setText(i18n.t('common:menu.tagline2'));
   }
 }
