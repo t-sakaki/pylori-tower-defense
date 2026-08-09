@@ -57,8 +57,9 @@ export default function GameCanvas() {
   return (
     <div
       style={{
+        flex: 1,
         width: '100vw',
-        height: '100dvh',
+        height: '100%',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
