@@ -33,9 +33,7 @@ export class BriefingScene extends Phaser.Scene {
       fontStyle: 'bold',
     }).setDepth(10);
 
-    this.add.text(leftTextX, height * 0.4, `敵：Helicobacter pylori
-推定数：10^8個体
-武器：ウレアーゼ / CagA / VacA`, {
+    this.add.text(leftTextX, height * 0.4, `敵：Helicobacter pylori\n推定数：約1億個体\n武器：ウレアーゼ / CagA / VacA`, {
       fontSize: '18px',
       color: '#ffffff',
       align: 'left',
@@ -82,7 +80,7 @@ export class BriefingScene extends Phaser.Scene {
     // ボタン: 服薬誓約へ
     const btnW = 240;
     const btnH = 60;
-    const btnY = height * 0.8;
+    const btnY = height * 0.82;
     const btnBg = this.add.rectangle(width / 2, btnY, btnW, btnH, 0x1e293b)
       .setInteractive({ useHandCursor: true })
       .setDepth(20);

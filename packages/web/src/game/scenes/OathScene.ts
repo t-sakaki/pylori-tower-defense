@@ -60,7 +60,7 @@ export class OathScene extends Phaser.Scene {
     // ボタン: 胃の平和のために
     const btnW = 260;
     const btnH = 60;
-    const btnY = height * 0.8;
+    const btnY = height * 0.82;
     const btnBg = this.add.rectangle(width / 2, btnY, btnW, btnH, 0x881337, 0.5)
       .setDepth(100);
     

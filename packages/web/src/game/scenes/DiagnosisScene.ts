@@ -29,7 +29,7 @@ export class DiagnosisScene extends Phaser.Scene {
     }
 
     // 診断テキスト表示エリア
-    const textY = height * 0.75;
+    const textY = height * 0.72;
     const mainText = this.add.text(width / 2, textY, '', {
       fontSize: '22px',
       color: '#ffffff',
@@ -71,7 +71,7 @@ export class DiagnosisScene extends Phaser.Scene {
     // 下部ボタン: 作戦会議へ
     const btnW = 240;
     const btnH = 60;
-    const btnY = height * 0.8;
+    const btnY = height * 0.82;
     const btnBg = this.add.rectangle(width / 2, btnY, btnW, btnH, 0xaa0000)
       .setInteractive({ useHandCursor: true })
       .setDepth(10);
