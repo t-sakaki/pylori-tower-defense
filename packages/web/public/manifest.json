@@ -1,0 +1,35 @@
+{
+  "name": "ピロリ菌除菌タワーディフェンス",
+  "short_name": "除菌TD",
+  "description": "胃の中を守る教育系タワーディフェンスゲーム",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a0505",
+  "theme_color": "#881337",
+  "icons": [
+    {
+      "src": "/assets/enemies/h-pylori.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/enemies/h-pylori.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/enemies/h-pylori.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/assets/enemies/h-pylori.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
