@@ -12,11 +12,17 @@ export default function GameCanvas() {
     Promise.all([
       import('phaser'),
       import('@/game/scenes/BootScene'),
+      import('@/game/scenes/DiagnosisScene'),
+      import('@/game/scenes/BriefingScene'),
+      import('@/game/scenes/OathScene'),
       import('@/game/scenes/MenuScene'),
       import('@/game/scenes/GameScene')
-    ]).then(([phaserModule, BootSceneModule, MenuSceneModule, GameSceneModule]) => {
+    ]).then(([phaserModule, BootSceneModule, DiagnosisSceneModule, BriefingSceneModule, OathSceneModule, MenuSceneModule, GameSceneModule]) => {
       const Phaser = phaserModule.default;
       const BootScene = BootSceneModule.BootScene;
+      const DiagnosisScene = DiagnosisSceneModule.DiagnosisScene;
+      const BriefingScene = BriefingSceneModule.BriefingScene;
+      const OathScene = OathSceneModule.OathScene;
       const MenuScene = MenuSceneModule.MenuScene;
       const GameScene = GameSceneModule.GameScene;
 
@@ -26,7 +32,7 @@ export default function GameCanvas() {
         height: 640,
         parent: containerRef.current,
         backgroundColor: '#1a0505',
-        scene: [BootScene, MenuScene, GameScene],
+        scene: [BootScene, DiagnosisScene, BriefingScene, OathScene, MenuScene, GameScene],
         scale: {
           mode: Phaser.Scale.FIT,
           autoCenter: Phaser.Scale.CENTER_BOTH,
@@ -52,10 +58,15 @@ export default function GameCanvas() {
     <div
       style={{
         width: '100vw',
-        maxWidth: '960px',
+        height: '100dvh',
+        maxHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         margin: '0 auto',
         overflow: 'hidden',
         position: 'relative',
+        boxSizing: 'border-box',
       }}
     >
       <div
@@ -65,6 +76,7 @@ export default function GameCanvas() {
           width: '100%',
           aspectRatio: '960 / 640',
           display: 'block',
+          boxSizing: 'border-box',
         }}
       />
     </div>

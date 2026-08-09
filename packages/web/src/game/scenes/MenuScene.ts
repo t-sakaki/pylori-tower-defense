@@ -41,6 +41,27 @@ export class MenuScene extends Phaser.Scene {
       this.enemyImage.setDisplaySize(140, 140);
       this.enemyImage.setAlpha(0.85);
       this.enemyImage.setDepth(0);
+
+      // ふわふわとした浮遊感のアニメーションを追加
+      this.tweens.add({
+        targets: this.enemyImage,
+        y: 130,               // 10px 下に移動
+        angle: 5,             // 5度回転
+        duration: 2000,       // 2秒かけて
+        yoyo: true,           // 元に戻る
+        repeat: -1,           // 無限ループ
+        ease: 'Sine.easeInOut' // 滑らかな加減速
+      });
+      
+      this.tweens.add({
+        targets: this.enemyImage,
+        x: 130,               // 10px 右に移動
+        angle: -5,            // -5度回転
+        duration: 2500,       // 2.5秒かけて（Y軸と周期をずらして自然に）
+        yoyo: true,
+        repeat: -1,
+        ease: 'Sine.easeInOut'
+      });
     }
 
     // タイトル
