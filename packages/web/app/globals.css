@@ -12,16 +12,18 @@
 html, body {
   height: 100%;
   width: 100%;
-  max-width: 100%;
-  overflow: hidden;
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 
 body {
   background-color: #0f0f0f;
   color: #ffffff;
   overscroll-behavior: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding-top: var(--safe-area-inset-top);
   padding-bottom: var(--safe-area-inset-bottom);
   padding-left: var(--safe-area-inset-left);

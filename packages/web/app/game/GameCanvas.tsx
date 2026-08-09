@@ -59,11 +59,9 @@ export default function GameCanvas() {
       style={{
         width: '100vw',
         height: '100dvh',
-        maxHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        margin: '0 auto',
         overflow: 'hidden',
         position: 'relative',
         boxSizing: 'border-box',
@@ -73,7 +71,8 @@ export default function GameCanvas() {
         ref={containerRef}
         className="border-4 border-gastric-900 rounded-lg shadow-2xl"
         style={{
-          width: '100%',
+          maxWidth: '100%',
+          maxHeight: '100%',
           aspectRatio: '960 / 640',
           display: 'block',
           boxSizing: 'border-box',

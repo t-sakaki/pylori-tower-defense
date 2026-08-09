@@ -82,7 +82,7 @@ export class BriefingScene extends Phaser.Scene {
     // ボタン: 服薬誓約へ
     const btnW = 240;
     const btnH = 60;
-    const btnY = height - 60;
+    const btnY = height * 0.8;
     const btnBg = this.add.rectangle(width / 2, btnY, btnW, btnH, 0x1e293b)
       .setInteractive({ useHandCursor: true })
       .setDepth(20);

@@ -71,7 +71,7 @@ export class DiagnosisScene extends Phaser.Scene {
     // 下部ボタン: 作戦会議へ
     const btnW = 240;
     const btnH = 60;
-    const btnY = height - 60;
+    const btnY = height * 0.8;
     const btnBg = this.add.rectangle(width / 2, btnY, btnW, btnH, 0xaa0000)
       .setInteractive({ useHandCursor: true })
       .setDepth(10);
